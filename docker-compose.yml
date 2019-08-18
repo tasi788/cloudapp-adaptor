@@ -1,0 +1,23 @@
+version: "2"
+services:
+  nginx:
+    image: valian/docker-nginx-auto-ssl
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./cert:/etc/resty-auto-ssl
+      - ./conf.d:/etc/nginx/conf.d
+
+  webapp:
+    build: .
+    restart: always
+    volumes:
+      - ./:/app
+
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - ./redis:/data
